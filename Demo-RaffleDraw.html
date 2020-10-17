@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="vue.min.js"></script>
+    <title>Raffle Draw</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{score}}</p>
+        <p>{{level}}</p>
+        <input type="button" value="Start" @click="start()" v-if ="isShow">
+        <input type="button" value="Stop" @click="stop()" v-if ="!isShow">
+    </div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            score: 0,
+            level: null,
+            intervalIndex:null,
+            isShow:true
+        },
+        methods: {
+            start() {
+                this.isShow=false;
+                if(this.intervalIndex == null){
+             this.intervalIndex =  setInterval(() => {
+                    
+                    //Math.random() 0~1
+                    this.score = parseInt(Math.random() * 100);
+                    //switch different prizes
+                    switch (true) {
+                        case this.score < 30:
+                            this.level = "Participation Award"
+                            break;
+                        case this.score >= 30 && this.score < 65:
+                            this.level = "Third Prize Winner"
+                            break;
+                        case this.score >= 65 && this.score < 85:
+                            this.level = "Second Prize Winner"
+                            break;
+                        case this.score >= 85:
+                            this.level = "First Prize Winner"
+                            break;
+                    }
+                }, 50)
+            }
+            },
+            stop(){
+                this.isShow=true;
+                clearInterval(this.intervalIndex);
+                this.intervalIndex = null
+            }
+        },
+    });
+</script>

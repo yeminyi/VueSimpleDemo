@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="vue.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- {{}} text interpolation using the “Mustache” syntax (double curly braces)-->
+        
+        <!-- v-text -->
+        <span v-text="msg"></span>
+        <!-- same as -->
+        <span>{{msg}}</span>
+
+        <!-- v-html text as html-->
+        <!-- v-bind Dynamically bind one or more attributes, -->
+        <!-- or a component prop to an expression.shorthand  : --> 
+        <!-- v-on Attaches an event listener to the element.  shorthand  @ -->
+        <!-- v-cloak Hiding elements until the Vue instance is ready-->
+        <p v-cloak>{{msg}} This is a message</p>
+        <p v-text="msg">This is a message using v-text</p> 
+        <p v-html="htmlText" id="htmlp"></p>
+        <p v-text="htmlText" id="textp"></p>
+        <input type="button" id="btn" :value="buttonText" @click="clickiMe">
+
+       
+        <div>------:class---------------------</div>
+        <p :class="['backg',flag?'fontcolor':'']">{{msg}}</p>
+        <p :class="['backg',{'fontcolor':flag}]">{{msg}}</p>
+        <div>------:style---------------------</div>
+        <p :style="[style1,style2]">{{msg}}</p>
+        <div>------v-model---two-way binding on a form input element or a component-----</div>
+        <input type="text" v-model="msg">
+        <button @click="change">Change Size</button>
+
+        <div>------v-show and v-hide---------------------</div>
+        <div v-if="isif">v-if here</div>
+        <div v-show="isShow">v-show here</div>
+        <button @click="hide" id="hideBtn" >{{btnText}}</button>
+
+
+
+    </div>
+</body>
+</html>
+<script>
+var vm = new Vue({
+    el:"#app",
+    data:{
+        msg:"Hello World",
+        flag:false,
+        style1:{'background-color': 'brown', color:'white'},
+        style2:{'font-size':"18px"},
+        isif:true,
+        isShow:true,
+        btnText:"Hide",
+        htmlText:"<b>This is HTML Text</b>",
+        buttonText:"This is a button"
+    },
+    methods: {
+        clickiMe(){
+            this.buttonText="This is another button";
+        },
+        change(){
+            if(this.style2['font-size'] == "18px")
+            this.style2['font-size'] = "22px";
+            else
+            this.style2['font-size'] = "18px";
+        },
+        hide(){
+            if(this.isShow==true)
+            {
+                this.isif=false;
+                this.isShow=false;
+                this.buttonText="Show";
+            }
+            else
+            {
+                this.isif=true;
+                this.isShow=true;
+                this.buttonText="Hide";
+            }
+        }
+    }
+})
+</script>
+<style>
+.backg{
+    background-color: aquamarine;
+}
+.fontcolor{
+    color:red;
+}
+.fontcolor1{
+    color:blue;
+}
+</style>
